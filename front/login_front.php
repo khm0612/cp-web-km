@@ -11,30 +11,31 @@ ob_start();
 <html lang="en">
 
 <head>
-<?php 
+    <?php 
 ?>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
-<script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
-<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
+    <script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
+    <script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
+    <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
     <script type="text/javascript" src="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js"></script>
     <title>Login_front_v.2.0</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <style>
-        .loginfont {
-            font-size: 4em;
-            color: red;
-        }
+    <style>
+    .loginfont {
+        font-size: 4em;
+        color: red;
+    }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -65,24 +66,29 @@ ob_start();
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-user"></i></div>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter your ID" maxlength="30" name="Id" value="" required>
+                                <input type="text" class="form-control" placeholder="Enter your ID" maxlength="30"
+                                    name="Id" value="" required>
                             </div>
                             <div class="input-group mb-4 ">
                                 <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-key " style="color: black;"></i></div>
+                                    <div class="input-group-text"><i class="fas fa-key " style="color: black;"></i>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control" name="Password" placeholder="Enter your password" maxlength="20" value="" required>
+                                <input type="text" class="form-control" name="Password"
+                                    placeholder="Enter your password" maxlength="20" value="" required>
                             </div>
 
                             <div class="col-12">
                                 <center>
-                                    <div class="g-recaptcha" data-callback="recaptChcallback" data-sitekey="6LdTCAIaAAAAAEeuGqenbzt6ICBumt1yqh7E1OO9"></div>
+                                    <div class="g-recaptcha" data-callback="recaptChcallback"
+                                        data-sitekey="6LdTCAIaAAAAAEeuGqenbzt6ICBumt1yqh7E1OO9"></div>
                                 </center>
                             </div>
 
 
                             <br>
-                            <button class="btn-lg btn-success btn-block" id="submit" name="submit" type="submit">Login</button>
+                            <button class="btn-lg btn-success btn-block" id="submit" name="submit"
+                                type="submit">Login</button>
                         </div>
                         <?php
                         //error_reporting(0);
@@ -179,7 +185,7 @@ ob_start();
 
 </html>
 <script>
-    function recaptChcallback() {
-        $("#submit").removeAttr("disabled");
-    }
+function recaptChcallback() {
+    $("#submit").removeAttr("disabled");
+}
 </script>
