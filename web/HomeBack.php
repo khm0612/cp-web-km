@@ -15,7 +15,9 @@ if ($Skill == null) {
 if ($Skill == '') {
     Session_Logout();
 }
-
+// if ($_REQUEST['x'] == null) {
+//     Session_Logout();
+// }
 function Session_Logout()
 {
 	unset($_SESSION["luser"]);
@@ -24,7 +26,7 @@ function Session_Logout()
 	unset($_SESSION["skill_sent"]);
 
 	session_destroy();
-	header("Location: http://10.183.252.68/sing9/web/Home.php");
+	header("Location: http://10.183.252.68/sing9/web/login_front.php");
 }
 $Db_Servername = 'webkm';
 $Db_Username = 'root';
@@ -36,11 +38,15 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 
-
+$Content ="CONTENT_TYPE_ID = 1 ";
+// echo $_REQUEST['x'];
+// if ($_REQUEST['x'] =! null){
+// 	$Content = 'TOPIC LIKE "%' . $_GET['x'] . '%" OR DESCRIPTION LIKE "%' . $_GET['x'] . '%" OR KEYWORD LIKE "%' . $_GET['x'] . '%" ';
+// }
 
 $SkillEx = explode("|", str_replace('"', '', $Skill));
 
-$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE CONTENT_TYPE_ID = 1  ORDER BY CONTENT_ID DESC LIMIT 100";
+$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE ". $Content ."   LIMIT 20";
 
 $resultsqlsks = mysqli_query($conn, $sqlcontenttype);
 

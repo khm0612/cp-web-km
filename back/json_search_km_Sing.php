@@ -1,6 +1,7 @@
 ﻿<?php
+session_start();
 
-
+ob_start();
 header('Content-Type: application/json');
 header("Content-type:application/json; charset=UTF-8");
 header("Cache-Control: no-store, no-cache, must-revalidate");

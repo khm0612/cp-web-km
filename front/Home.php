@@ -1,81 +1,57 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+
 //include('include/nevbar.php');
 // include('include/includecss.php');
 // include('include/includejavascript.php');    
+session_start();
 ob_start();
-//$_REQUEST['skill'];
-$_SESSION['skill_sent'];
-$Skill = $_SESSION['skill_sent'];
-$_REQUEST['skill'] = $Skill;
-//echo $Skill;
-
 echo '<pre>';
 var_dump($_SESSION);
 echo '</pre>';
+echo '<hr>';
+echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+//$_REQUEST['skill'];
+$_SESSION['skill_sent'];
+$Skill = $_SESSION['skill_sent'];
+$_POST['skill'] = $Skill;
+//echo $Skill;
+
 $Skill = $_POST['skill'];
 $_SESSION['expire'];
- if ($_SESSION['expire'] == null) {
-    echo"expire = null";
-    echo "<br>";
-    //  Session_Logout();
- }
-if ($Skill == null) {
-
-    echo "skill = null";
-    echo "<br>";
-    echo "<hr>";
-    //Session_Logout();
-}
-if ($_REQUEST['skill'] == null) {
-
-    echo "Post_skill = null";
-    echo "<br>";
-    echo "<hr>";
-    //Session_Logout();
-}
-if ($_SESSION['skill'] == null) {
-
-    echo "SESSION_skill = null";
-    echo "<br>";
-    echo "<hr>";
-    //Session_Logout();
-}
+// if ($_SESSION['expire'] == null) {
+//     Session_Logout();
+// }
+// if ($Skill == null) {
+//     Session_Logout();
+// }
 //echo $_SESSION['expire'];
 
 echo $_SESSION['expire'];
-echo $_REQUEST['skill'];
-echo $_SESSION['skill'];
-echo $Skill;
+echo $_POST['skill'];
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
-    <link rel="stylesheet" type="text/css" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
-    <script type="text/javascript" src="bootstrap-4.5.3-dist/bootstrap.min.js"></script>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
-    </script>
-    <script src="https://kit.fontawesome.com/70c6b531cd.js" crossorigin="anonymous"></script>
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8">
-    <title>Home(Week2)</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
+    <script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
+    <script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js"></script>
+
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="web/style.php">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"> <!-- link เลือก css-->
-    <link rel="stylesheet" href="node_modules/font-awesome5/css/fontawesome-all.css">
-    <link rel="stylesheet" href="include/CSS/styles.css?v=<?php echo filemtime('include/CSS/styles.css'); ?>" type=" text/css">
-    <link rel="icon" href="img/index/icon.png">
     <title>Main V.0.2</title>
     <style>
         @import 'https://fonts.googleapis.com/css?family=Kanit|Prompt';
@@ -137,7 +113,7 @@ echo $Skill;
                     $counts = 0;
                     $argument1 = $_POST['x'];
                     //_sentparamToKmDb();
-                    $url = "http://gocalwi01/WsApp/SearchKM/back/json_search_km_Sing.php?x=" . $_POST['x'] . "&&skill=" . $_REQUEST['skill'];
+                    $url = "http://gocalwi01/WsApp/SearchKM/back/json_search_km_Sing.php?x=" . $_POST['x'] . "&&skill=" . $_POST['skill'];
                     $url = str_replace(" ", '%20', $url);
                     $json = file_get_contents($url);
                     //echo $json;
@@ -292,7 +268,7 @@ echo $Skill;
                 <?php
 
 
-                $url = "http://gocalwi01/WsApp/SearchKM/back/HomeBack.php?skill=" . $_REQUEST['skill'];
+                $url = "http://gocalwi01/WsApp/SearchKM/back/HomeBack.php?skill=" . $_POST['skill'];
                 $i = '';
                 $r = '';
                 $count = 0;

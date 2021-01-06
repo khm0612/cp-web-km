@@ -1,8 +1,10 @@
 <?php
-header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Cache-Control: GET-check=0, pre-check=0", false);
+session_start();
 
 ob_start();
+
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: GET-check=0, pre-check=0", false);
 
 
 ?>
@@ -11,31 +13,32 @@ ob_start();
 <html lang="en">
 
 <head>
-    <?php 
-?>
+    <?php
+    ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
     <script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
     <script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
-    <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
+
+
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
     <script type="text/javascript" src="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js"></script>
     <title>Login_front_v.2.0</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    .loginfont {
-        font-size: 4em;
-        color: red;
-    }
+        .loginfont {
+            font-size: 4em;
+            color: red;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -63,32 +66,26 @@ ob_start();
                     <div class="card-body">
                         <div class="mb-3" style="color: green;">
                             <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-user"></i></div>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Enter your ID" maxlength="30"
-                                    name="Id" value="" required>
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="Enter your ID" maxlength="30" name="Id" value="" required>
                             </div>
                             <div class="input-group mb-4 ">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-key " style="color: black;"></i>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" name="Password"
-                                    placeholder="Enter your password" maxlength="20" value="" required>
-                            </div>
 
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-key " style="color: black;"></i></span>
+
+                                <input type="text" class="form-control" name="Password" placeholder="Enter your password" maxlength="20" value="" required>
+                            </div>
                             <div class="col-12">
                                 <center>
-                                    <div class="g-recaptcha" data-callback="recaptChcallback"
-                                        data-sitekey="6LdTCAIaAAAAAEeuGqenbzt6ICBumt1yqh7E1OO9"></div>
+                                    <div class="g-recaptcha" data-callback="recaptChcallback" data-sitekey="6LdTCAIaAAAAAEeuGqenbzt6ICBumt1yqh7E1OO9"></div>
                                 </center>
                             </div>
 
 
                             <br>
-                            <button class="btn-lg btn-success btn-block" id="submit" name="submit"
-                                type="submit">Login</button>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn btn-lg btn-outline-success" id="submit" name="submit" type="submit">Login</button>
+                            </div>
                         </div>
                         <?php
                         //error_reporting(0);
@@ -113,7 +110,7 @@ ob_start();
                             //$Skill = $_POST[$Skill];
                             //$_POST['skill_sent'] = $Skill;
                             // $_COOKIE['skill_sent'] = $Skill;
-                            //$_SESSION['skill_sent'] = $Skill;
+                            $_SESSION['skill_sent'] = $Skill;
                             //$_SESSION['skill_sent'] = $Skill;
 
                             //$_SERVER['skill_sent'] = $Skill;
@@ -145,16 +142,13 @@ ob_start();
 
 
                                     $_POST['skill'] = $Skill;
-                                    $_POST = $_SESSION['skill_sent'];
+
 
                                     $_SESSION['start'] = time();
-                                    $_SESSION['expire'] = $_SESSION['start'] + (60 * 3);
-                                    $_SESSION['skill'] = $_POST['skill'];
+                                    $_SESSION['expire'] = $_SESSION['start'] + (60 * 5);
                                     //echo $_SESSION['expire'];
-                                    //$_POST['skill'];
-                                    echo '<pre>';
-                                    var_dump($_SESSION);
-                                    echo '</pre>';
+                                    $_POST['skill'];
+
                                     if ($json != null) {
                                         header("Location: https://callservicechat.gosoft.co.th/KMSearch/front/Home.php");
                                     } else {
@@ -162,9 +156,6 @@ ob_start();
                                 }
                             } else {
                                 echo (":: in Front Else");
-                                echo '<pre>';
-                                var_dump($_SESSION);
-                                echo '</pre>';
                                 // print_r($_POST['Id']);
                                 //print_r($_POST['Password']);
                             }
@@ -185,7 +176,7 @@ ob_start();
 
 </html>
 <script>
-function recaptChcallback() {
-    $("#submit").removeAttr("disabled");
-}
+    function recaptChcallback() {
+        $("#submit").removeAttr("disabled");
+    }
 </script>

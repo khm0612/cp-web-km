@@ -67,18 +67,15 @@ header("Cache-Control: GET-check=0, pre-check=0", false);
                     <div class="card-body">
                         <div class="mb-3" style="color: green;">
                             <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-user"></i></div>
-                                </div>
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                                 <input type="text" class="form-control" placeholder="Enter your ID" maxlength="30" name="Id" value="" required>
                             </div>
                             <div class="input-group mb-4 ">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-key " style="color: black;"></i></div>
-                                </div>
+
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-key " style="color: black;"></i></span>
+
                                 <input type="text" class="form-control" name="Password" placeholder="Enter your password" maxlength="20" value="" required>
                             </div>
-
                             <div class="col-12">
                                 <center>
                                     <div class="g-recaptcha" data-callback="recaptChcallback" data-sitekey="6LdTCAIaAAAAAEeuGqenbzt6ICBumt1yqh7E1OO9"></div>
@@ -87,7 +84,9 @@ header("Cache-Control: GET-check=0, pre-check=0", false);
 
 
                             <br>
-                            <button class="btn-lg btn-success btn-block" id="submit" name="submit" type="submit">Login</button>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn btn-lg btn-outline-success" id="submit" name="submit" type="submit">Login</button>
+                            </div>
                         </div>
                         <?php
                         error_reporting(0);

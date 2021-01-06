@@ -1,5 +1,7 @@
 <?php
 //include('include/nevbar.php');
+session_start();
+
 // include('include/includecss.php');
 // include('include/includejavascript.php');    
 ob_start();

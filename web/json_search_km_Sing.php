@@ -30,7 +30,7 @@ if ($_GET['x']) {
 }
 $sql = 'SELECT * FROM vw_content_webkm WHERE ' . $stxt . 'ORDER BY CONTENT_ID DESC LIMIT 70';
 
-$sqls = 'SELECT a.CONTENT_ID,a.TOPIC,a.DESCRIPTION,a.LAST_UPDATE,a.CONTENT_TYPE_ID,a.SKILL,b.category_name,c.subcategory_name  FROM content_table a LEFT JOIN category_table b ON b.id = a.CATEGORY_ID LEFT JOIN subcategory_table c ON c.id = a.SUBCATEGORY_ID WHERE  ' . $stxt . ' ORDER BY LAST_UPDATE  LIMIT 5';
+$sqls = 'SELECT a.CONTENT_ID,a.TOPIC,a.DESCRIPTION,a.LAST_UPDATE,a.CONTENT_TYPE_ID,a.SKILL,b.category_name,c.subcategory_name  FROM content_table a LEFT JOIN category_table b ON b.id = a.CATEGORY_ID LEFT JOIN subcategory_table c ON c.id = a.SUBCATEGORY_ID WHERE  ' . $stxt . ' ORDER BY LAST_UPDATE  LIMIT 50';
 
 
 // Create connection
@@ -67,46 +67,54 @@ if (mysqli_num_rows($result) !== null) {
 					);
 					if(empty($newArray[0]['topic'])==null){
 						//array_push($newArray['subcatename'],"s2_No_Data-----------------------------");
-						$newArray[0]['topic'] = "-----------------------NoData-----------------------";
+						$newArray[0]['topic'] = "-----------------------NoData_Topic-----------------------";
 
 
 					}
-					if(empty($newArray[0]['topic'])=="null"){
-						//array_push($newArray['subcatename'],"s2_No_Data-----------------------------");
-						$newArray[0]['topic'] = "-----------------------NoData-----------------------";
+					// if(empty($newArray[0]['topic'])=="null"){
+					// 	//array_push($newArray['subcatename'],"s2_No_Data-----------------------------");
+					// 	$newArray[0]['topic'] = "-----------------------NoData_Topic-----------------------";
 
 
-					}
-					if(empty($newArray[0]['subcatename'])=="null"){
-						//array_push($newArray['subcatename'],"s2_No_Data-----------------------------");
-						$newArray[0]['subcatename'] = "-----------------------NoData-----------------------";
-
-
-					}
+					// }
 					if(empty($newArray[0]['subcatename'])==null){
 						//array_push($newArray['subcatename'],"s2_No_Data-----------------------------");
-						$newArray[0]['subcatename'] = "-----------------------NoData-----------------------";
+						$newArray[0]['subcatename'] = "-----------------------NoData_subcatename-----------------------";
 
 
 					}
-					if(empty($newArray[0]['description'])==null){
-						$newArray[0]['description'] = "-----------------------NoData-----------------------";
-						//$a = array($newArray[0]['description']=>"No_data");
-						//array_push($a,"d2_No_Data**************************************************");
+					// if(empty($newArray[0]['subcatename'])=="null"){
+					// 	//array_push($newArray['subcatename'],"s2_No_Data-----------------------------");
+					// 	$newArray[0]['subcatename'] = "-----------------------NoData+subcatename-----------------------";
 
-					}
-					if(empty($newArray[0]['cate_name'])=="null"){
-						$newArray[0]['cate_name'] = "-----------------------NoData-----------------------";
-						//$a = array($newArray[0]['description']=>"No_data");
-						//array_push($a,"d2_No_Data**************************************************");
 
-					}
+					// }
 					if(empty($newArray[0]['cate_name'])==null){
-						$newArray[0]['cate_name'] = "-----------------------NoData-----------------------";
+						$newArray[0]['cate_name'] = "-----------------------NoData_cate_name-----------------------";
 						//$a = array($newArray[0]['description']=>"No_data");
 						//array_push($a,"d2_No_Data**************************************************");
 
 					}
+					// if(empty($newArray[0]['cate_name'])=="null"){
+					// 	$newArray[0]['cate_name'] = "-----------------------NoData_cate_name-----------------------";
+					// 	//$a = array($newArray[0]['description']=>"No_data");
+					// 	//array_push($a,"d2_No_Data**************************************************");
+
+					// }
+					if(empty($newArray[0]['description'])==null){
+						$newArray[0]['description'] = "-----------------------NoData_description-----------------------";
+						//$a = array($newArray[0]['description']=>"No_data");
+						//array_push($a,"d2_No_Data**************************************************");
+
+					}
+					// if(empty($newArray[0]['description'])=="null"){
+					// 	$newArray[0]['description'] = "-----------------------NoData_description-----------------------";
+					// 	//$a = array($newArray[0]['description']=>"No_data");
+					// 	//array_push($a,"d2_No_Data**************************************************");
+
+					// }
+					
+					
 					// if (!empty($newArray[0]['subcatename']) && in_array(1, $newArray[0], true)){
 					// 	echo("x");
 					// 	//array_push($newArray,"s2_No_Data");
