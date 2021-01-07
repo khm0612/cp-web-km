@@ -40,13 +40,13 @@ if (!$conn) {
 $stxt = 'TOPIC LIKE "%' . $_REQUEST['x'] . '%" OR DESCRIPTION LIKE "%' . $_REQUEST['x'] . '%" OR KEYWORD LIKE "%' . $_REQUEST['x'] . '%" ';
 $Content = null;
 //echo $_REQUEST['x'];
-if ($_REQUEST['x'] = !null) {
-	$key = $_REQUEST['x'];
-	$C = "TOPIC LIKE '%" . $_REQUEST['x'] . "%'  ";
-	$T = "TOPIC LIKE '%hot%' ";
-	$W = "hotline";
-	//Session_Logout();
-}
+// if ($_REQUEST['x'] = !null) {
+// 	$key = $_REQUEST['x'];
+// 	$C = "TOPIC LIKE '%" . $_REQUEST['x'] . "%'  ";
+// 	$T = "TOPIC LIKE '%hot%' ";
+// 	$W = "hotline";
+// 	//Session_Logout();
+// }
 // if($_REQUEST['x']==null){
 // 	$_REQUEST['x']="counter";
 // }
@@ -67,8 +67,10 @@ if ($_REQUEST['x'] = !null) {
 // hotline
 // '". $_REQUEST['x'] ."'
 $SkillEx = explode("|", str_replace('"', '', $Skill));
+//print_r($SkillEx);
+$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE TOPIC LIKE '%" . $_GET['x'] . "%' OR KEYWORD LIKE '%" . $_GET['x'] . "%' OR 'DESCRIPTION' LIKE '%" . $_GET['x'] . "%'  LIMIT 30 ";
 
-$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE TOPIC LIKE '%" . $_GET['x'] . "%' OR KEYWORD LIKE '" . $_GET['x'] . "' OR DESCRIPTION LIKE '%" . $_GET['x'] . "%'  ORDER BY CONTENT_ID  LIMIT 40 ";
+
 //echo $sqlcontenttype;
 $resultsqlsks = mysqli_query($conn, $sqlcontenttype);
 
@@ -79,7 +81,7 @@ if (mysqli_num_rows($resultsqlsks) !== null) {
 		);
 
 		$exp = explode('|', $rowsks['SKILL']);
-
+		//print_r($exp);
 		if (array_intersect($SkillEx, $exp)) {
 
 			if (empty($rowsks['CATEGORY_NAME'])) {
@@ -91,6 +93,9 @@ if (mysqli_num_rows($resultsqlsks) !== null) {
 			if (empty($rowsks['SUBCATEGORY_NAME'])) {
 				array_push($rowsks['SUBCATEGORY_NAME'], "s_No_Data");
 			}
+			if (empty($rowsks['FILE_ATTACH'])) {
+				array_push($rowsks['FILE_ATTACH'], "File_No_Data");
+			}
 
 
 			$newArray[] = array(
@@ -98,6 +103,7 @@ if (mysqli_num_rows($resultsqlsks) !== null) {
 				'subcatename' => $rowsks['SUBCATEGORY_NAME'],
 				'cate_name' => $rowsks['CATEGORY_NAME'],
 				'description' => $rowsks['DESCRIPTION'],
+				'File' => $rowsks['FILE_ATTACH']
 				//'content_id' => $rowsks['CONTENT_ID'],
 
 			);

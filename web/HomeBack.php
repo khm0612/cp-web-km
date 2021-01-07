@@ -46,7 +46,7 @@ $Content ="CONTENT_TYPE_ID = 1 ";
 
 $SkillEx = explode("|", str_replace('"', '', $Skill));
 
-$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE ". $Content ."   LIMIT 20";
+$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE ". $Content ."   LIMIT 30";
 
 $resultsqlsks = mysqli_query($conn, $sqlcontenttype);
 
@@ -76,6 +76,8 @@ if (mysqli_num_rows($resultsqlsks) !== null) {
 				'subcatename' => $rowsks['SUBCATEGORY_NAME'],
 				'cate_name' => $rowsks['CATEGORY_NAME'],
 				 'description' => $rowsks['DESCRIPTION'],
+				 'File' => $rowsks['FILE_ATTACH']
+
 				//'content_id' => $rowsks['CONTENT_ID'],
 				
 			);

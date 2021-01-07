@@ -28,18 +28,11 @@ if ($Skill == null) {
 <html lang="en">
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="bootstrap-5.0.0-beta1-dist/js/ajax.js"></script>
     <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
-    <script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
-    <script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
-
-
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
     <script type="text/javascript" src="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js"></script>
-
-
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <script src="bootstrap-5.0.0-beta1-dist/js/maxcdn.js"></script>
     <title>Main V.1</title>
     <!-- <style>
         @import 'https://fonts.googleapis.com/css?family=Kanit|Prompt';
@@ -48,6 +41,14 @@ if ($Skill == null) {
             font-family: 'Prompt', sans-serif;
         }
     </style> -->
+    <style>
+        .modal-lg {
+
+            max-width: 90%;
+            max-height: 80vh;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -101,10 +102,10 @@ if ($Skill == null) {
                     $counts = 0;
                     $argument1 = $_POST['x'];
                     //_sentparamToKmDb();
-                    $url = "http://10.183.252.68/sing9/web/search_bar.php?x=" . $_POST['x'] . "&&skill=" . $_POST['skill'];
-                    $url = str_replace(" ", '%20', $url);
+                    $url = "http://10.183.252.68/sing9/web/search_bar.php?x=" . $_POST['x'] . "&skill=" . $_POST['skill'];
+                    //$url = str_replace(" ", '%20', $url);
                     $json = file_get_contents($url);
-                    //echo $json;
+                    //echo $url;
                     $json = str_replace('][', ",", $json);
                     $json = str_replace('[{', "", $json);
                     $json = str_replace('}]', "", $json);
@@ -114,87 +115,110 @@ if ($Skill == null) {
                     $displays = '';
                     foreach ($json as $l => $item) {
                         $cont = '';
-                        if ($l != 20) {
-                            $item2 = explode('","', $item);
+                        //if ($l != 40) {
+                        $item2 = explode('","', $item);
 
-                            $a = 0;
+                        $a = 0;
 
+                        //$l++;
+                        //print_r($item);
+                        foreach ($item2 as $l2 => $item4) {
+                            $item3 = explode('":', $item4);
 
-                            //$l++;
-                            //print_r($item2);
-                            foreach ($item2 as $l2 => $item4) {
-                                $item3 = explode('":', $item4);
+                            $a++;
+                            if ($a == 1) {
+                                //$toopics = null;
+                                $toopics = $item3[1];
+                                $toopics = str_replace('\r', '', $toopics);
+                                $toopics = str_replace('\n', '', $toopics);
+                                $toopics = str_replace('"', '', $toopics);
+                                $toopics = str_replace('\\', '', $toopics);
+                                $toopics = str_replace('/', '', $toopics);
+                                $toopics = str_replace('\/', '', $toopics);
 
-                                $a++;
-                                if ($a == 1) {
-                                    $toopics = null;
-                                    $toopics = $item3[1];
-                                    $toopics = str_replace('\r', '', $toopics);
-                                    $toopics = str_replace('\n', '', $toopics);
-                                    $toopics = str_replace('"', '', $toopics);
-                                    $toopics = str_replace('\\', '', $toopics);
-                                    $toopics = str_replace('/', '', $toopics);
-                                    $toopics = str_replace('\/', '', $toopics);
-
-                                    $displays .= '<u type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop' . $l . '"><h5>' . $toopics . '</h5>
+                                $displays = '<u type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrops' . $l . '"><h5>' . $toopics . '</h5>
                                          </u>';
-                                    echo $displays;
-                                    //<div class="d-grid gap-2"> </div>
-                                    //$displays.=$item3[1].'<hr>';
+                                echo $displays;
+                                //<div class="d-grid gap-2"> </div>
+                                //$displays.=$item3[1].'<hr>';
+                                $displays = '';
+                            }
+                            if ($a == 2) {
+                                //$subcatt =  null;
+                                $subcatts = $item3[1];
+                                $subcatts = str_replace('\r', '', $subcatts);
+                                $subcatts = str_replace('\n', '', $subcatts);
+                                $subcatts = str_replace('"', '', $subcatts);
+
+                                //echo("********");
+                                echo ("<hr>");
+                                //$displays.=$item3[1].'<hr>';
+                            }
+                            if ($a == 3) {
+                                //$catt = null;
+                                $catts = $item3[1];
+                                $catts = str_replace('\r', '', $catts);
+                                $catts = str_replace('\n', '', $catts);
+                                $catts = str_replace('"', '', $catts);
+                                $catts = str_replace('\/', '', $catts);
+
+                                //$displays.=$item3[1].'<hr>';
+                            }
+                            if ($a == 4) {
+                                // $dessc = null;
+                                $desscs = $item3[1];
+                                $desscs = str_replace('\r', '', $desscs);
+                                $desscs = str_replace('\n', '', $desscs);
+                                $desscs = str_replace('"', '', $desscs);
+                                $desscs = str_replace('\t', '', $desscs);
+                                $desscs = str_replace('\\', '', $desscs);
+                                $desscs = str_replace('/kcfinder', 'http://webkm/kcfinder', $desscs);
+                                $desscs = str_replace('alt=', ' class="img-fluid" ', $desscs);
+                                $doc = new DOMDocument();
+                                @$doc->loadHTML($desscs);
+                                $tags = $doc->getElementsByTagName('img');
+                                foreach ($tags as $tag) {
+
+                                    $picPath = $tag->getAttribute('src');
+
+                                    $getPicUrl = "http://10.183.252.68/sing9/web/PicBack.php?picPath=" . $picPath;
+                                    $picJson = file_get_contents($getPicUrl);
+                                    $picJson = json_decode($picJson);
+                                    $desscs =  str_replace($picPath, 'data:image/gif;base64,' . $picJson . ' ', $desscs);
                                 }
-                                if ($a == 2) {
-                                    //$subcatt =  null;
-                                    $subcatts = $item3[1];
-                                    $subcatts = str_replace('\r', '', $subcatts);
-                                    $subcatts = str_replace('\n', '', $subcatts);
-                                    $subcatts = str_replace('"', '', $subcatts);
+                                //$desscs = strip_tags($desscs);
 
-                                    //echo("********");
-                                    echo ("<hr>");
-                                    //$displays.=$item3[1].'<hr>';
-                                }
-                                if ($a == 3) {
-                                    //$catt = null;
-                                    $catts = $item3[1];
-                                    $catts = str_replace('\r', '', $catts);
-                                    $catts = str_replace('\n', '', $catts);
-                                    $catts = str_replace('"', '', $catts);
-                                    $catts = str_replace('\/', '', $catts);
-
-                                    //$displays.=$item3[1].'<hr>';
-                                }
-                                if ($a == 4) {
-                                    // $dessc = null;
-                                    $desscs = $item3[1];
-                                    $desscs = str_replace('\r', '', $desscs);
-                                    $desscs = str_replace('\n', '', $desscs);
-                                    $desscs = str_replace('"', '', $desscs);
-                                    $desscs = str_replace('\t', '', $desscs);
-                                    $desscs = str_replace('\\', '', $desscs);
-                                    $desscs = str_replace('/kcfinder', 'http://webkm/kcfinder', $desscs);
-                                    $desscs = str_replace('alt', '', $desscs);
-                                    $doc = new DOMDocument();
-                                    @$doc->loadHTML($desscs);
-                                    $tags = $doc->getElementsByTagName('img');
-                                    foreach ($tags as $tag) {
-
-                                        $picPath = $tag->getAttribute('src');
-
-                                        $getPicUrl = "http://10.183.252.68/sing9/web/PicBack.php?picPath=" . $picPath;
-                                        $picJson = file_get_contents($getPicUrl);
-                                        $picJson = json_decode($picJson);
-                                        $desscs =  str_replace($picPath, 'data:image/gif;base64,' . $picJson . ' ', $desscs);
-                                    }
-                                    //$desscs = strip_tags($desscs);
-                                    $displays = '<div class="modal fade" id="staticBackdrop' . $l . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                //$displays.='<pre>'.$item3[1].'</pre><hr>';
+                            }
+                            if ($a == 5) {
+                                //$catt = null;
+                                $Files = $item3[1];
+                                $Files = str_replace('\r', '', $Files);
+                                $Files = str_replace('\n', '', $Files);
+                                $Files = str_replace('"', '', $Files);
+                                $Files = str_replace('\/', '', $Files);
+                                $tempPath = $Files;
+                                 
+                                 if ($Files != null) {
+                                     $Files =  'http://webkm/attfile/'. $tempPath;
+                                //     // if(isset(['download'.$k])==true){
+                                //     $downloadfile = 'http://webkm/attfile/' . $File . '';
+                                //     $getFileUrl = "http://10.183.252.68/sing9/web/Fileback.php?FilePath=" . $downloadfile;
+                                //     $fileGet = readfile($getFileUrl);
+                                //     //$fileGet = json_decode($fileGet);
+                                //     //$fileGet = base64_decode($fileGet);
+                                //     // }
+                                 }
+                                //$displays.=$item3[1].'<hr>';
+                                $displays .= '<div class="modal fade" id="staticBackdrops' . $l . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-scrollable">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                             <h5 class="modal-title" id="staticBackdropLabel">' . $toopics . '</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                            <b>หมวดหมู่ :</b><br>' . $catts . '<br><b>หมวดหมู่ย่อย :</b><br>' . $subcatts . '<hr>' . $desscs . '<hr>' . '
+                                                            <b>หมวดหมู่ :</b><br>' . $catts . '<br><b>หมวดหมู่ย่อย :</b><br>' . $subcatts . '<hr>' . $desscs . '<hr>' . $Files . '
                                                             </div>
                                                             <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -204,21 +228,20 @@ if ($Skill == null) {
                                                         </div>
                                                     </div>';
 
-                                    $l++;
-
-                                    //$displays.='<pre>'.$item3[1].'</pre><hr>';
-                                }
+                                $l++;
+                                echo $displays;
                             }
-
-
-                            // $k++;
-                            //$k++;
-                            //echo $display;
-                            //echo("---");
-
-                            //echo $display;
-                            //echo $k;
                         }
+
+
+                        // $k++;
+                        //$k++;
+                        //echo $display;
+                        //echo("---");
+
+                        //echo $display;
+                        //echo $k;
+                        //}
                     }
                 }
 
@@ -262,7 +285,7 @@ if ($Skill == null) {
                 $display = '';
                 foreach ($jsoned as $k => $item) {
                     $cont = '';
-                    if ($k != 20) {
+                    if ($k != 30) {
                         $item2 = explode('","', $item);
 
                         $j = 0;
@@ -286,7 +309,9 @@ if ($Skill == null) {
 
                                 $display .= '<u type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop' . $k . '"><h5>' . $toopic . '</h5>
                                  </u>';
-                                echo $display;
+                                //echo $display;
+                                // $display = '';
+
                                 //<div class="d-grid gap-2"> </div>
                                 //$display.=$item3[1].'<hr>';
                             }
@@ -334,27 +359,51 @@ if ($Skill == null) {
                                     $dessc =  str_replace($picPath, 'data:image/gif;base64,' . $picJson . ' ', $dessc);
                                 }
                                 //$dessc = strip_tags($dessc);
-                                $display = '<div class="modal fade" id="staticBackdrop' . $k . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">' . $toopic . '</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                    <b>หมวดหมู่ :</b><br>' . $catt . '<br><b>หมวดหมู่ย่อย :</b><br>' . $subcatt . '<hr>' . $dessc . '<hr>' . '
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>';
 
-                                $k++;
 
                                 //$display.='<pre>'.$item3[1].'</pre><hr>';
+                            }
+                            if ($j == 5) {
+                                //$catt = null;
+                                $File = $item3[1];
+                                // $File = str_replace('\r', '', $File);
+                                // $File = str_replace('\n', '', $File);
+                                $File = str_replace('"', '', $File);
+                                // $File = str_replace('\/', '', $File);
+                                 $tempPath = $File;
+                                 
+                                 if ($File != null) {
+                                     $File =  'http://webkm/attfile/'. $tempPath;
+                                //     // if(isset(['download'.$k])==true){
+                                //     $downloadfile = 'http://webkm/attfile/' . $File . '';
+                                //     $getFileUrl = "http://10.183.252.68/sing9/web/Fileback.php?FilePath=" . $downloadfile;
+                                //     $fileGet = readfile($getFileUrl);
+                                //     //$fileGet = json_decode($fileGet);
+                                //     //$fileGet = base64_decode($fileGet);
+                                //     // }
+                                 }
+                                //$displays.=$item3[1].'<hr>';
+                                $display .= '<div class="modal fade" id="staticBackdrop' . $k . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">' . $toopic . '</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            <b>หมวดหมู่ :</b><br>' . $catt . '<br><b>หมวดหมู่ย่อย :</b><br>' . $subcatt . '<hr>' . $dessc . '<hr>'.$File.' <hr>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>';
+
+                                $k++;
+                                echo $display;
+                                $display = '';
                             }
                         }
 

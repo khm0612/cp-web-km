@@ -5,9 +5,11 @@ ob_start();
 if ($_REQUEST['Id'] == null) {
     Session_Logout();
 }
+$_REQUEST['Id'] = base64_decode($_REQUEST['Id']);
 if ($_REQUEST['Password'] == null) {
     Session_Logout();
 }
+$_REQUEST['Password'] = base64_decode($_REQUEST['Password']);
 $Id = $_REQUEST['Id'];
 $Password = $_REQUEST['Password'];
 $Db_Servername = 'webkm';
@@ -15,15 +17,15 @@ $Db_Username = 'root';
 $Db_Password = 'dbwebkm@2016';
 $Db_name = 'webkm';
 function Session_Logout()
-                                            {
-                                                unset($_SESSION["luser"]);
-                                                unset($_SESSION["start"]);
-                                                unset($_SESSION["expire"]);
-                                                unset($_SESSION["skill_sent"]);
+{
+    unset($_SESSION["luser"]);
+    unset($_SESSION["start"]);
+    unset($_SESSION["expire"]);
+    unset($_SESSION["skill_sent"]);
 
-                                                session_destroy();
-                                                header("Location: http://10.183.252.68/sing9/web/login_front.php");
-                                            }
+    session_destroy();
+    header("Location: http://10.183.252.68/sing9/web/login_front.php");
+}
 $conn = mysqli_connect($Db_Servername, $Db_Username, $Db_Password, $Db_name);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());

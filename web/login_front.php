@@ -10,13 +10,11 @@ header("Cache-Control: GET-check=0, pre-check=0", false);
 <html lang="en">
 
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
-<script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
-<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
+    <script src="bootstrap-5.0.0-beta1-dist/js/ajax.js"></script>
+    <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
     <script type="text/javascript" src="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap-5.0.0-beta1-dist/js/maxcdn.js"></script>
     <title>Login_front_v.2.0</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,12 +90,14 @@ header("Cache-Control: GET-check=0, pre-check=0", false);
                         error_reporting(0);
                         try {
                             if (isset($_POST['Id']) && isset($_POST['Password'])) {
+                                $_POST['Id'] = base64_encode($_POST['Id']);
+                                $_POST['Password'] = base64_encode($_POST['Password']);
                                 $url = 'http://10.183.252.68/sing9/web/login_back.php?Id=' . $_POST['Id'] . '&&Password=' . $_POST['Password'];
 
                                 $json = file_get_contents($url);
 
                                 $check_num = str_replace('|', ',', $json);
-                               // $jsoned = json_encode($json);
+                                // $jsoned = json_encode($json);
                                 //echo($jsoned);
                                 echo $json;
                                 $Skill = $json;
