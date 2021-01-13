@@ -4,8 +4,8 @@ session_start();
 ob_start();
 
 header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Cache-Control: GET-check=0, pre-check=0", false);
 
+header("Cache-Control: GET-check=0, pre-check=0", false);
 
 ?>
 <!DOCTYPE html>
@@ -13,20 +13,22 @@ header("Cache-Control: GET-check=0, pre-check=0", false);
 <html lang="en">
 
 <head>
-    <?php
-    ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="bootstrap-5.0.0-beta1-dist/js/ajax.js"></script>
     <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
-    <script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
-    <script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
-
-
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
     <script type="text/javascript" src="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap-5.0.0-beta1-dist/js/maxcdn.js"></script>
     <title>Login_front_v.2.0</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <?php
+
+
+    // include('include/includecss.php');
+    // include('include/includejavascript.php')
+    ?>
     <style>
         .loginfont {
             font-size: 4em;
@@ -88,81 +90,71 @@ header("Cache-Control: GET-check=0, pre-check=0", false);
                             </div>
                         </div>
                         <?php
-                        //error_reporting(0);
+                        error_reporting(0);
+                        try {
+                            if (isset($_POST['Id']) && isset($_POST['Password'])) {
+                                $_POST['Id'] = base64_encode($_POST['Id']);
+                                $_POST['Password'] = base64_encode($_POST['Password']);
+                                $url = 'http://gocalwi01/WsApp/SearchKM/back/login_back.php?Id=' . $_POST['Id'] . '&&Password=' . $_POST['Password'];
 
-                        if (isset($_POST['Id']) && isset($_POST['Password'])) {
-                            $url = 'http://gocalwi01/WsApp/SearchKM/back/login_back.php?Id=' . $_POST['Id'] . '&&Password=' . $_POST['Password'];
+                                $json = file_get_contents($url);
 
-                            $json = file_get_contents($url);
-                            //echo ("fileGetContent---1----");
-                            echo ("<br>");
-                            echo $json;
-                            echo ("<br>");
+                                $check_num = str_replace('|', ',', $json);
+                                // $jsoned = json_encode($json);
+                                //echo($jsoned);
+                                echo $json;
+                                $Skill = $json;
+                                //echo $json;
+                                //print_r($Skill);
 
-                            $check_num = str_replace('|', ',', $json);
-                            //$jsoned = json_encode($json);
-                            //echo ("---2---");
-                            //echo($jsoned);
-                            $Skill = $json;
-                            //echo $json;
-                            //print_r($Skill);
-
-                            //$Skill = $_POST[$Skill];
-                            //$_POST['skill_sent'] = $Skill;
-                            // $_COOKIE['skill_sent'] = $Skill;
-                            $_SESSION['skill_sent'] = $Skill;
-                            //$_SESSION['skill_sent'] = $Skill;
-
-                            //$_SERVER['skill_sent'] = $Skill;
-                            //print_r($_POST['skill_sent']);
-                            //echo($_POST['skill_sent']);
-                            //session_start();
-                            //$arg1 = $_POST['Id'];
-                            //$arg2 = $_POST['Password'];
-                            //$Login_Result = true;\
-                            //echo("  in front-if  ");
-                            // $_SESSION['skills_j']=$jsoned;
-                            // echo $_SESSION['skills_j'];
-
-
-                            //var_dump($json);
-                            $word = "expire";
-                            if ($json !== null) {
-                                //strpos($jsoned,$word) !== false
-                                //echo(" in Login_Result ");
-                                //echo($loginB);
-
-                                //$_SESSION['skill_sent'] = $Skill;
-                                //$Skill = $_SESSION['skill_sent'];
+                                //$Skill = $_POST[$Skill];
+                                //$_POST['skill_sent'] = $Skill;
+                                // $_COOKIE['skill_sent'] = $Skill;
                                 $_SESSION['skill_sent'] = $Skill;
-                                //echo $_SESSION['skill_sent'];
-                                //secho $Skill;
-                                if ($_SESSION['skill_sent'] !== null) {
+
+
+                                //var_dump($json);
+                                $word = "expire";
+                                if ($json !== null) {
+                                    //strpos($jsoned,$word) !== false
+                                    //echo(" in Login_Result ");
+                                    //echo($loginB);
+
+                                    //$_SESSION['skill_sent'] = $Skill;
+                                    //$Skill = $_SESSION['skill_sent'];
+                                    $_SESSION['skill_sent'] = $Skill;
+                                    //echo $_SESSION['skill_sent'];
+                                    //secho $Skill;
+                                    if ($_SESSION['skill_sent'] !== null) {
 
 
 
-                                    $_POST['skill'] = $Skill;
+                                        $_POST['skill'] = $Skill;
 
 
-                                    $_SESSION['start'] = time();
-                                    $_SESSION['expire'] = $_SESSION['start'] + (60 * 5);
-                                    //echo $_SESSION['expire'];
-                                    $_POST['skill'];
+                                        $_SESSION['start'] = time();
+                                        $_SESSION['expire'] = $_SESSION['start'] + (60 * 5);
+                                        //echo $_SESSION['expire'];
+                                        $_POST['skill'];
 
-                                    if ($json != null) {
-                                        header("Location: https://callservicechat.gosoft.co.th/KMSearch/front/Home.php");
-                                    } else {
+                                        if ($json != null) {
+                                            header("Location: https://callservicechat.gosoft.co.th/KMSearch/front/Home.php");
+                                        } else {
+                                        }
                                     }
+                                } else {
+                                    echo (":: in Front Else");
+                                    // print_r($_POST['Id']);
+                                    //print_r($_POST['Password']);
                                 }
                             } else {
-                                echo (":: in Front Else");
-                                // print_r($_POST['Id']);
-                                //print_r($_POST['Password']);
+                                //echo ("Error-font");
                             }
+                            //$authF = $_REQUEST['expire'];
+                            //echo $authF;
+                        } catch (Exception $e) {
+                            echo 'Caught exception: ',  $e->getMessage(), "\n";
                         }
-                        //$authF = $_REQUEST['expire'];
-                        //echo $authF;
-
                         ?>
 
                         </form>

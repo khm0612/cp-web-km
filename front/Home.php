@@ -1,68 +1,69 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
-
-//include('include/nevbar.php');
-// include('include/includecss.php');
-// include('include/includejavascript.php');    
 session_start();
 ob_start();
-echo '<pre>';
-var_dump($_SESSION);
-echo '</pre>';
-echo '<hr>';
-echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-//$_REQUEST['skill'];
+ini_set('memory_limit', '-1');
+// error_reporting(0);
 $_SESSION['skill_sent'];
 $Skill = $_SESSION['skill_sent'];
 $_POST['skill'] = $Skill;
-//echo $Skill;
 
 $Skill = $_POST['skill'];
 $_SESSION['expire'];
+$expireSent = $_SESSION['expire'];
+$auth = 'true';
 // if ($_SESSION['expire'] == null) {
 //     Session_Logout();
 // }
 // if ($Skill == null) {
 //     Session_Logout();
 // }
-//echo $_SESSION['expire'];
 
-echo $_SESSION['expire'];
-echo $_POST['skill'];
+// pathinfo();
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="bootstrap-5.0.0-beta1-dist/js/ajax.js"></script>
     <link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.1-web/css/all.css">
-    <script href="bootstrap-5.0.0-beta1-dist/maual/js1.js"></script>
-    <script href="bootstrap-5.0.0-beta1-dist/maual/js2.js"></script>
-
-
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
     <script type="text/javascript" src="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js"></script>
-
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Main V.0.2</title>
+    <script src="bootstrap-5.0.0-beta1-dist/js/maxcdn.js"></script>
+    <title>Main V.1</title>
+    <link rel="stylesheet" type="text/css" href="css.css">
     <style>
-        @import 'https://fonts.googleapis.com/css?family=Kanit|Prompt';
+        .modal-lg {
 
-        body {
-            font-family: 'Prompt', sans-serif;
+            max-width: 90%;
+            max-height: 80vh;
+
         }
     </style>
 </head>
+<?php
+
+function d0wNl0AD($name)
+{
+    $_REQUEST['File'];
+    $File = $_REQUEST['File'];
+    $result = file_get_contents('http://gocalwi01/WsApp/SearchKM/back/fileback.php?pathFile=' . $File);
+    $result =  json_decode($result);
+    $result = base64_decode($result);
+
+    file_put_contents($name, $result);
+    header('Content-Type: application/octet-stream');
+    header("Content-Transfer-Encoding: Binary");
+    header("Content-disposition: attachment; filename=\"" . basename($name) . "\"");
+    readfile($name);
+}
+
+?>
 
 <body>
+
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-danger">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,148 +114,153 @@ echo $_POST['skill'];
                     $counts = 0;
                     $argument1 = $_POST['x'];
                     //_sentparamToKmDb();
-                    $url = "http://gocalwi01/WsApp/SearchKM/back/json_search_km_Sing.php?x=" . $_POST['x'] . "&&skill=" . $_POST['skill'];
-                    $url = str_replace(" ", '%20', $url);
+                    $url = "http://gocalwi01/WsApp/SearchKM/back/search_bar.php?x=" . $_POST['x'] . "&&skill=" . $_POST['skill'];
+                    //$url = str_replace(" ", '%20', $url);
                     $json = file_get_contents($url);
-                    //echo $json;
-                    $json = str_replace('][', ",", $json);
-                    $json = str_replace('[{', "", $json);
-                    $json = str_replace('}]', "", $json);
-                    $json = explode('},{', $json);
-                    foreach ($json as $w => $obj) {
-                        $obj2 = explode('","', $obj);
+                    //print_r($json);
+                    if ($json == null) {
+                        return null;
+                        break;
+                    } else {
+                        //echo $url;
+                        $json = str_replace('][', ",", $json);
+                        $json = str_replace('[{', "", $json);
+                        $json = str_replace('}]', "", $json);
+                        $json = explode('},{', $json);
+                        //----------------------------------------------
 
+                        $displays = '';
+                        foreach ($json as $l => $item) {
+                            $cont = '';
+                            //if ($l != 40) {
+                            $item2 = explode('","', $item);
 
-                        foreach ($obj2 as $w2 => $obj4) {
-                            $obj3 = explode('":', $obj4);
+                            $a = 0;
 
-                            foreach ($obj3 as $w3 => $result) {
-                                // print_r($obj3);
-                                str_replace('"', '', $result);
+                            //$l++;
+                            //print_r($item);
+                            foreach ($item2 as $l2 => $item4) {
+                                $item3 = explode('":', $item4);
 
-                                $FinResult = str_replace('\r\n', '<br>', str_replace('\/', '/', $result));
-                                $FinResult = str_replace('\t', "", $FinResult);
-                                //echo($FinResult);
-                                if ($w3 == 1) {
-                                    //echo $FinResult;
+                                $a++;
+                                if ($a == 1) {
 
+                                    //$toopics = null;
+                                    $toopics = $item3[1];
+                                    $toopics = str_replace('\r', '', $toopics);
+                                    $toopics = str_replace('\n', '', $toopics);
+                                    $toopics = str_replace('"', '', $toopics);
+                                    $toopics = str_replace('\\', '', $toopics);
+                                    $toopics = str_replace('/', '', $toopics);
+                                    $toopics = str_replace('\/', '', $toopics);
 
-                                    //  $count = 0;
-                                    //echo $result;
-                                    str_replace('"', '', $FinResult);
+                                    $displays = '<u type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrops' . $l . '"><h5>' . $toopics . '</h5>
+                                         </u>';
+                                    echo $displays;
 
+                                    $displays = '';
+                                }
+                                if ($a == 2) {
+                                    //$subcatt =  null;
+                                    $subcatts = $item3[1];
+                                    $subcatts = str_replace('\r', '', $subcatts);
+                                    $subcatts = str_replace('\n', '', $subcatts);
+                                    $subcatts = str_replace('"', '', $subcatts);
 
-                                    // $counts = 1;
-                ?>
-                                    <div class="container">
-                                        <div class="accordion-md">
+                                    //echo("********");
+                                    echo ("<hr>");
+                                    //$displays.=$item3[1].'<hr>';
+                                }
+                                if ($a == 3) {
+                                    //$catt = null;
+                                    $catts = $item3[1];
+                                    $catts = str_replace('\r', '', $catts);
+                                    $catts = str_replace('\n', '', $catts);
+                                    $catts = str_replace('"', '', $catts);
+                                    $catts = str_replace('\/', '', $catts);
 
-                                            <?php
-                                            // $id = 'RES' . $r;
-                                            // $ress = '';
-                                            if ($counts !== 10) {
+                                    //$displays.=$item3[1].'<hr>';
+                                }
+                                if ($a == 4) {
+                                    // $dessc = null;
+                                    $desscs = $item3[1];
+                                    $desscs = str_replace('\r', '', $desscs);
+                                    $desscs = str_replace('\n', '', $desscs);
+                                    $desscs = str_replace('"', '', $desscs);
+                                    $desscs = str_replace('\t', '', $desscs);
+                                    $desscs = str_replace('\\', '', $desscs);
+                                    $desscs = str_replace('/kcfinder', 'http://webkm/kcfinder', $desscs);
+                                    $desscs = str_replace('alt=', ' class="img-fluid" ', $desscs);
+                                    $doc = new DOMDocument();
+                                    @$doc->loadHTML($desscs);
+                                    $tags = $doc->getElementsByTagName('img');
+                                    foreach ($tags as $tag) {
 
-                                                $ShowIds = 'D' . $counts;
+                                        $picPath = $tag->getAttribute('src');
 
-                                                echo ('<div class="panel-group">');
-                                                echo ('<div class="panel panel-default">');
-                                                echo ('<div class="panel-heading">');
-
-
-                                                if ($w2 == 0 && $obj3[1]) {
-                                                    echo (' <h4 class="panel-title">');
-                                                    echo ('<a data-toggle="collapse" href="#' . $ShowIds . '">');
-                                                    $result = str_replace('\r', '', $result);
-                                                    $result = str_replace('\n', '', $result);
-                                                    $result = str_replace('"', '', $result);
-                                                    //$result = str_replace('\/','',$result);
-                                                    $result = str_replace('/', '', $result);
-                                                    echo ("</u>");
-
-                                                    echo $result;
-                                                    echo ("</u>");
-
-                                                    echo ('</a>');
-                                                    echo ('</h4>');
-                                                    echo ('<hr>');
-                                                }
-                                                echo ('</div>');
-                                                echo ('<div id="' . $ShowIds . '" class="panel-collapse collapse">');
-                                                echo ('<ul class="list-group">');
-
-                                                if ($w2 == 1 && $obj3[1]) {
-                                                    echo ('<li class="list-group-item">');
-                                                    $result = str_replace('\r', '', $result);
-                                                    $result = str_replace('\n', '', $result);
-                                                    $result = str_replace('"', '', $result);
-                                                    $result = str_replace('\/', '', $result);
-                                                    echo ("</u>");
-
-                                                    echo ("หมวดหมู่  :");
-                                                    echo $result;
-                                                    echo ("</u>");
-
-                                                    echo ('</li>');
-                                                }
-
-
-
-                                                if ($w2 == 3 && $obj3[1]) {
-                                                    echo ('<li class="list-group-item">');
-                                                    $result = str_replace('\r', '', $result);
-                                                    $result = str_replace('\n', '', $result);
-                                                    $result = str_replace('"', '', $result);
-                                                    $result = str_replace('\/', '', $result);
-                                                    $result = str_replace('\t', '', $result);
-                                                    $result = str_replace('</>', '', $result);
-                                                    $result = str_replace('\\', '', $result);
-
-
-                                                    if ($result != null) {
-                                                        //echo ("<pre>");
-                                                        echo ("</u>");
-
-                                                        echo (strip_tags($result, '<br><p></p><div></div><pre></pre><u></u>'));
-                                                        echo ("</u>");
-
-                                                        //echo ("</pre>");
-                                                        echo ("<hr>");
-                                                        echo ('</li>');
-                                                        $counts++;
-                                                    }
-
-
-
-                                            ?>
-                        <?php
-                                                }
-                                                // $counts++;
-                                                //echo ($counts);
-                                                echo ('</ul>');
-                                                echo ('</div>');
-                                                echo ('</div>');
-                                                echo ('</div>');
-                                            }
-                                            echo ('</div>');
-                                            echo ('</div>');
-                                        }
+                                        $getPicUrl = "https://callservicechat.gosoft.co.th/KMSearch/back/PicBack.php?picPath=" . $picPath;
+                                        $picJson = file_get_contents($getPicUrl);
+                                        $picJson = json_decode($picJson);
+                                        // echo $picJson;
+                                        $desscs =  str_replace($picPath, 'data:image/gif;base64,' . $picJson . ' ', $desscs);
                                     }
+                                }
+
+                                if ($a == 5) {
+                                    //$catt = null;
+                                    $Files = $item3[1];
+                                    // $Files = str_replace('\r', '', $Files);
+                                    // $Files = str_replace('\n', '', $Files);
+                                    $Files = str_replace('"', '', $Files);
+                                    // $Files = str_replace('\/', '', $Files);
+                                    $tempPaths = $Files;
+
+                                    $putInDisplays = 'Nofile';
+                                    if ($Files != null) {
+                                        $Files =  'http://webkm/attfile/' . $tempPaths;
+
+                                        // $name = 'downloadFile.zip';
+                                        $names = $tempPaths;
+                                        $putInDisplays = '<a href="http://gocalwi01/WsApp/SearchKM/front/DownloadFile.php?File=' . $Files . '&name=' . $names . '&auth=' . $auth . ' " ><button class="btn1" download ><i class="fa fa-download"></i>download</button></a>';
+                                    }
+                                    //$displays.=$item3[1].'<hr>';
+                                    $displays .= '<div class="modal fade" id="staticBackdrops' . $l . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">' . $toopics . '</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            <b>หมวดหมู่ :</b><br>' . $catts . '<br><b>หมวดหมู่ย่อย :</b><br>' . $subcatts . '<hr>' . $desscs . '<hr> ' . $putInDisplays . ' <hr>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>';
+
+                                    $l++;
+                                    echo $displays;
                                 }
                             }
                         }
+                    }
 
+                ?>
 
-                        ?>
-
-                        </form>
-                                        </div>
-
-                                    </div>
-
+                    </form>
             </div>
-        </div>
-    </div>
 
+        </div>
+
+
+    <?php } ?>
+    </div>
+    </div>
+    </div>
 
 
 
@@ -280,205 +286,186 @@ echo $_POST['skill'];
                 // $jsoned = json_decode($jsoned,true);
                 // echo $jsoned;
                 //print_r($jsoned); 
+                $display = '';
                 foreach ($jsoned as $k => $item) {
-                    $item2 = explode('","', $item);
+                    $cont = '';
+                    if ($k != 500) {
+                        $item2 = explode('","', $item);
 
-                    //print_r($item2);
-                    foreach ($item2 as $k2 => $item4) {
-                        $item3 = explode('":', $item4);
-
-                        // echo"<pre>";
-                        foreach ($item3 as $k3 => $result) {
-                            $r++;
-                            str_replace('"', '', $result);
-                            //echo($result);
-                            //echo $k3;
-                            //echo $k3,'  - ',$result;
-                            $FinResult = str_replace('\r\n', '<br>', str_replace('\/', '/', $result));
-                            $FinResult = str_replace('\t', "", $FinResult);
-                            //echo($FinResult);
-                            if ($k3 == 1) {
+                        $j = 0;
 
 
-                                // $count = 0;
-                                //echo $result;
-                                //str_replace('"','',$FinResult);
-                                //echo $FinResult;
-                                //                                         
-                ?>
-                                <!-- แสดงตรงนี้นะครับ -->
+                        //$k++;
+                        //print_r($item2);
+                        foreach ($item2 as $k2 => $item4) {
+                            $item3 = explode('":"', $item4);
+                            //                  ORIGINAL--      $item3 = explode('":', $item4);
 
-                                <div class="container">
-                                    <div class="accordion-md">
+                            // print_r($item3);
+                            // echo "<hr>";
+                            // print_r($item4);
 
-                                        <?php
-                                        $id = 'RES' . $r;
-                                        $ress = '';
+                            $j++;
+                            if ($j == 1) {
+                                $toopic = null;
+                                $toopic = $item3[1];
+                                $toopic = str_replace('\r', '', $toopic);
+                                $toopic = str_replace('\n', '', $toopic);
+                                $toopic = str_replace('"', '', $toopic);
+                                $toopic = str_replace('\\', '', $toopic);
+                                $toopic = str_replace('/', '', $toopic);
+                                $toopic = str_replace('\/', '', $toopic);
 
-                                        //    echo $FinResult;
+                                $display .= '<u type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop' . $k . '"><h5>' . $toopic . '</h5>
+                                 </u>';
+                                //echo $display;
+                                // $display = '';
 
-                                        if ($count !== 20) {
-                                            // echo 'innews';
-                                        ?>
+                                //<div class="d-grid gap-2"> </div>
+                                //$display.=$item3[1].'<hr>';
+                            }
+                            if ($j == 2) {
+                                //$subcatt =  null;
+                                $subcatt = $item3[1];
+                                $subcatt = str_replace('\r', '', $subcatt);
+                                $subcatt = str_replace('\n', '', $subcatt);
+                                $subcatt = str_replace('"', '', $subcatt);
 
+                                //echo("********");
+                                echo ("<hr>");
+                                //$display.=$item3[1].'<hr>';
+                            }
+                            if ($j == 3) {
+                                //$catt = null;
+                                $catt = $item3[1];
+                                $catt = str_replace('\r', '', $catt);
+                                $catt = str_replace('\n', '', $catt);
+                                $catt = str_replace('"', '', $catt);
+                                $catt = str_replace('\/', '', $catt);
 
+                                //$display.=$item3[1].'<hr>';
+                            }
+                            if ($j == 4) {
+                                // $dessc = null;
+                                $dessc = $item3[1];
+                                $dessc = str_replace('\r', '', $dessc);
+                                $dessc = str_replace('\n', '', $dessc);
+                                $dessc = str_replace('"', '', $dessc);
+                                $dessc = str_replace('\t', '', $dessc);
+                                $dessc = str_replace('\\', '', $dessc);
+                                $dessc = str_replace('/kcfinder', 'http://webkm/kcfinder', $dessc);
+                                $dessc = str_replace('alt', '', $dessc);
+                                $doc = new DOMDocument();
+                                @$doc->loadHTML($dessc);
+                                $tags = $doc->getElementsByTagName('img');
+                                foreach ($tags as $tag) {
 
-                                            <?php
-                                            $ShowId = 'C' . $count;
-                                            //echo('<div class="card">');
-                                            echo ('<div class="panel-group">');
-                                            echo ('<div class="panel panel-default">');
-                                            echo ('<div class="panel-heading">');
+                                    $picPath = $tag->getAttribute('src');
 
+                                    $getPicUrl = "http://gocalwi01/WsApp/SearchKM/back/PicBack.php?picPath=" . $picPath;
+                                    $picJson = file_get_contents($getPicUrl);
+                                    $picJson = json_decode($picJson);
+                                    $dessc =  str_replace($picPath, 'data:image/gif;base64,' . $picJson . ' ', $dessc);
+                                    $picName = basename($picPath);
+                                    if ($dessc != null) {
 
-                                            //echo('<div class="card-header" >');
-                                            if ($k2 == 0 && $item3[1]) {
-                                                echo (' <h4 class="panel-title">');
-                                                echo ('<a data-toggle="collapse" href="#' . $ShowId . '">');
-                                                $result = str_replace('\r', '', $result);
-                                                $result = str_replace('\n', '', $result);
-                                                $result = str_replace('"', '', $result);
-                                                $result = str_replace('\\', '', $result);
+                                        $debase64 = base64_decode($picJson);
+                                        $sizes = getImageSizeFromString($debase64);
 
-                                                echo ("</u>");
+                                        // if (empty($sizes['mime']) || strpos($sizes['mime'], 'image/') !== 0) {
+                                        //     // die('Base64 value is not a valid image');
+                                        // }
 
-                                                echo ("หัวข้อ  :");
-                                                echo $result;
-                                                echo ('</a>');
-                                                echo ('</h4>');
-                                                echo ('<hr>');
-                                                //echo("</b>");
+                                        // $exts = substr($sizes['mime'],6);
 
-                                            }
+                                        // if (!in_array($exts, [
+                                        //     'png', 'gif', 'jpeg','JPG'
+                                        // ])) {
+                                        //     // die('Unsupported image type');
+                                        // }
+                                        // $CPic = '';
 
-                                            echo ('</div>');
-                                            echo ('<div id="' . $ShowId . '" class="panel-collapse collapse">');
-                                            echo ('<ul class="list-group">');
-                                            if ($k2 == 1 && $item3[1]) {
-                                                echo ('<li class="list-group-item">');
-                                                $result = str_replace('\r', '', $result);
-                                                $result = str_replace('\n', '', $result);
-                                                $result = str_replace('"', '', $result);
-                                                echo ("</u>");
-
-                                                echo ("หมวดหมู่  :");
-                                                echo $result;
-                                                echo ('</li>');
-
-
-
-                                                // echo "<br>";
-                                                // echo "test";
-                                            }
-                                            if ($k2 == 2 && $item3[1]) {
-                                                echo ('<li class="list-group-item">');
-                                                $result = str_replace('\r', '', $result);
-                                                $result = str_replace('\n', '', $result);
-                                                $result = str_replace('"', '', $result);
-                                                echo ("</u>");
-
-                                                echo ("หมวดหมู่ย่อย  :");
-                                                echo $result;
-                                                echo ('</li>');
-
-
-                                                // echo "<br>";
-                                                // echo "test";
-                                            }
-                                            //echo('</div>');
-
-
-
-                                            if ($k2 == 3 && $item3[1]) {
-
-                                                echo ('<li class="list-group-item">');
-                                                $result = str_replace('\r', '', $result);
-                                                $result = str_replace('\n', '', $result);
-                                                $result = str_replace('"', '', $result);
-                                                $result = str_replace('\/', '', $result);
-                                                $result = str_replace('\t', '', $result);
-                                                $result = str_replace('<b>', '', $result);
-                                                $result = str_replace('</b>', '', $result);
-                                                $result = str_replace('\\', '', $result);
-
-
-                                                //echo('</div>');
-
-                                                //echo('<div class="accordion">');\
-                                                echo ("</u>");
-                                                echo ("เนื้อหา");
-                                                echo (strip_tags($result, '<br><p></p><div></div><pre></pre>'));
-                                                echo ("</u>");
-
-                                                //echo ("<pre>");
-                                                //echo $result;
-                                                //echo ("</pre>");
-                                                echo ("<hr>");
-                                                echo ('</li>');
-                                                // echo "<br>";
-                                                // echo "test";
-
-                                                $count++;
-                                            }
-                                            echo ('</ul>');
-
-                                            echo ('</div>');
-
-                                            echo ('</div>');
-                                            echo ('</div>');
-
-
-
-                                            ?>
-
-
-
-
-
-
-                                            <?php
-                                        }
-                                        echo ('</div>');
-
-                                        echo ('</div>');
-
-                                        //นอกลูป
+                                        // $img_files = "file:///C:/Users/vitta/Desktop/cahesPic/" . $picName . ".png";
+                                        // $img_files = str_replace('%20', ' ', $img_files);
+                                        //$CPic++;
+                                        //file_put_contents($img_files, $debase64);
                                     }
+                                    //$CPic++;
                                 }
+                                //$dessc = strip_tags($dessc);
+
+
+                                //$display.='<pre>'.$item3[1].'</pre><hr>';
+                            }
+                            if ($j == 5) {
+                                //$catt = null;
+                                $File = $item3[1];
+                                // $File = str_replace('\r', '', $File);
+                                // $File = str_replace('\n', '', $File);
+                                $File = str_replace('"', '', $File);
+                                // $File = str_replace('\/', '', $File);
+                                $tempPath = $File;
+
+                                if ($File != null) {
+                                    $File =  'http://webkm/attfile/' . $tempPath;
+
+                                    // $name = 'downloadFile.zip';
+                                    $name = $tempPath;
+                                }
+
+                                //$displays.=$item3[1].'<hr>';
+                                $display .= '<div class="modal fade" id="staticBackdrop' . $k . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">' . $toopic . '</h5>
+                                                            <p type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></p>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            <b>หมวดหมู่ :</b><br>' . $catt . '<br><b>หมวดหมู่ย่อย :</b><br>' . $subcatt . '<hr>' . $dessc . '<hr><a href="http://gocalwi01/WsApp/SearchKM/front/DownloadFile.php?File=' . $File . '&name=' . $name . '&auth=' . $auth . '  " ><button class="btn1" download ><i class="fa fa-download"></i>download</button></a><hr>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>';
+
+                                $k++;
+                                echo $display;
+                                $display = '';
                             }
                         }
-
-                                            ?><?php
-
-                                                ?>
-
-                                            <?php
+                    }
+                }
 
 
 
 
 
 
-                                            if (isset($_GET['Submit1'])) {
-                                                Session_Logout();
-                                            }
+                if (isset($_GET['Submit1'])) {
+                    Session_Logout();
+                }
 
-                                            function Session_Logout()
-                                            {
-                                                unset($_SESSION["luser"]);
-                                                unset($_SESSION["start"]);
-                                                unset($_SESSION["expire"]);
-                                                unset($_SESSION["skill_sent"]);
+                function Session_Logout()
+                {
+                    session_unset();
+                    //session_destroy();
+                    session_write_close();
+                    unset($_SESSION["luser"]);
+                    unset($_SESSION["start"]);
+                    unset($_SESSION["expire"]);
+                    unset($_SESSION["skill_sent"]);
 
-                                                session_destroy();
-                                                header("Location: https://callservicechat.gosoft.co.th/KMSearch/front/login_front.php");
-                                            }
-                                            ?>
-                                    </div>
-                                </div>
+                    session_destroy();
+                    header("Location: https://callservicechat.gosoft.co.th/KMSearch/front/login_front.php");
+                }
+                ?>
             </div>
-
-
+        </div>
+    </div>
 </body>
 
 </html>

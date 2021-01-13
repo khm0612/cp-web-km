@@ -1,5 +1,6 @@
 
 <?php
+set_time_limit(0);
 header('Content-Type: application/json');
 header("Content-type:application/json; charset=UTF-8");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -10,10 +11,10 @@ ob_start();
 $_REQUEST['skill'];
 $Skill = $_REQUEST['skill'];
 if ($Skill == null) {
-    Session_Logout();
+	Session_Logout();
 }
 if ($Skill == '') {
-    Session_Logout();
+	Session_Logout();
 }
 // if ($_REQUEST['x'] == null) {
 //     Session_Logout();
@@ -38,15 +39,11 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 
-$Content ="CONTENT_TYPE_ID = 1 ";
-// echo $_REQUEST['x'];
-// if ($_REQUEST['x'] =! null){
-// 	$Content = 'TOPIC LIKE "%' . $_GET['x'] . '%" OR DESCRIPTION LIKE "%' . $_GET['x'] . '%" OR KEYWORD LIKE "%' . $_GET['x'] . '%" ';
-// }
+$Content = "CONTENT_TYPE_ID = 1 ";
 
 $SkillEx = explode("|", str_replace('"', '', $Skill));
 
-$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE ". $Content ."   LIMIT 30";
+$sqlcontenttype = "SELECT * FROM vw_content_webkm WHERE " . $Content . "   LIMIT 50";
 
 $resultsqlsks = mysqli_query($conn, $sqlcontenttype);
 
@@ -60,14 +57,14 @@ if (mysqli_num_rows($resultsqlsks) !== null) {
 
 		if (array_intersect($SkillEx, $exp)) {
 
-			if(empty($rowsks['CATEGORY_NAME'])){
-				array_push($rowsks['CATEGORY_NAME'],"No_Data");
+			if (empty($rowsks['CATEGORY_NAME'])) {
+				array_push($rowsks['CATEGORY_NAME'], "No_Data");
 			}
-			if(empty($rowsks['DESCRIPTION'])){
-				array_push($rowsks['DESCRIPTION'],"d_No_Data");
+			if (empty($rowsks['DESCRIPTION'])) {
+				array_push($rowsks['DESCRIPTION'], "d_No_Data");
 			}
-			if(empty($rowsks['SUBCATEGORY_NAME'])){
-				array_push($rowsks['SUBCATEGORY_NAME'],"s_No_Data");
+			if (empty($rowsks['SUBCATEGORY_NAME'])) {
+				array_push($rowsks['SUBCATEGORY_NAME'], "s_No_Data");
 			}
 
 
@@ -75,11 +72,11 @@ if (mysqli_num_rows($resultsqlsks) !== null) {
 				'topic' => $rowsks['TOPIC'],
 				'subcatename' => $rowsks['SUBCATEGORY_NAME'],
 				'cate_name' => $rowsks['CATEGORY_NAME'],
-				 'description' => $rowsks['DESCRIPTION'],
-				 'File' => $rowsks['FILE_ATTACH']
+				'description' => $rowsks['DESCRIPTION'],
+				'File' => $rowsks['FILE_ATTACH']
 
-				//'content_id' => $rowsks['CONTENT_ID'],
-				
+
+
 			);
 			$nextArray[] = array(
 				'description' => $rowsks['DESCRIPTION'],
@@ -87,17 +84,16 @@ if (mysqli_num_rows($resultsqlsks) !== null) {
 			);
 
 
-			 $jsoned = str_replace('][', ",", json_encode($newArray, JSON_UNESCAPED_UNICODE));
-			$jsonedDes = json_encode($newArray,JSON_UNESCAPED_UNICODE);
+			$jsoned = str_replace('][', ",", json_encode($newArray, JSON_UNESCAPED_UNICODE));
+			$jsonedDes = json_encode($newArray, JSON_UNESCAPED_UNICODE);
 			// $jsoned = str_replace('][', "ssss", $jsoned);
 
 
-			
+
 		}
 	}
-			 echo $jsoned;
-			 return $jsoned;
-			//echo $jsonedDes;
+	echo $jsoned;
+	return $jsoned;
 }
 
 

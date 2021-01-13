@@ -16,7 +16,13 @@ $Skill = $_REQUEST['skill'];
 // if ($Skill == '') {
 //     Session_Logout();
 // }
+$jsoned = '';
+$jsonedDes ='';
 //echo $_GET['x'];
+if($_REQUEST['x']==null){
+	return null;
+	break;
+}
 function Session_Logout()
 {
 	unset($_SESSION["luser"]);
@@ -39,32 +45,7 @@ if (!$conn) {
 //TOPIC LIKE '%hotline%'
 $stxt = 'TOPIC LIKE "%' . $_REQUEST['x'] . '%" OR DESCRIPTION LIKE "%' . $_REQUEST['x'] . '%" OR KEYWORD LIKE "%' . $_REQUEST['x'] . '%" ';
 $Content = null;
-//echo $_REQUEST['x'];
-// if ($_REQUEST['x'] = !null) {
-// 	$key = $_REQUEST['x'];
-// 	$C = "TOPIC LIKE '%" . $_REQUEST['x'] . "%'  ";
-// 	$T = "TOPIC LIKE '%hot%' ";
-// 	$W = "hotline";
-// 	//Session_Logout();
-// }
-// if($_REQUEST['x']==null){
-// 	$_REQUEST['x']="counter";
-// }
-// if(is_string($_REQUEST['x'])){
-// 	$_REQUEST['x'] = "hotline";
-// }
-// if(is_string($_REQUEST['x'])){
-// 	$_REQUEST['x'] = "hotline";
-// }
-// else{
-//     echo "Content = null";
-//     $C = null;
-//     $T = "AS<>SAD<<>%ASD=/asd>Z8*";
-//     $conn = "SAD";
-//     $resultsqlsks = 125;
-//     break;
-// }
-// hotline
+
 // '". $_REQUEST['x'] ."'
 $SkillEx = explode("|", str_replace('"', '', $Skill));
 //print_r($SkillEx);
